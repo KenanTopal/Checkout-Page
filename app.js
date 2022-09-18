@@ -1,9 +1,54 @@
-const removeCartItem = document.getElementsByTagName('button');
-for(let i = 0; i< removeCartItem.length; i++){
-  const button = removeCartItem[i]
-  button.addEventListener('click', function(e){
-    alert('bak kaldiriyom hehehe')
-    const buttonClicked = e.target;
-    buttonClicked.parentElement.parentElement.parentElement.remove()
-  })
+const productsDiv = document.querySelector(".products");
+function handleClick(e) {
+  console.log(e.target);
+  if (e.target.classList.contains("plus")) {
+    // console.log(+"2.55" + 5);
+    let count = +e.target.previousElementSibling.textContent + 1;
+    e.target.previousElementSibling.textContent = count;
+    // console.log(e.target.previousElementSibling);
+    const parentDiv = e.target.parentElement.parentElement;
+    const price = parentDiv.querySelector("strong").textContent;
+    parentDiv.querySelector(".product-line-price").textContent = count * price;
+    // console.log(parentDiv.querySelector(".product-line-price").textContent);
+    calculate();
+  }
+  if (e.target.classList.contains("minus")) {
+    // console.log(+"2.55" + 5);
+    let count = +e.target.nextElementSibling.textContent - 1;
+    if (count === 0) {
+      if (confirm("Do you want to remove?"))
+        e.target.parentElement.parentElement.parentElement.remove();
+      // console.log(e.target.parentElement.parentElement.parentElement);
+    } else {
+      e.target.nextElementSibling.textContent = count;
+      // console.log(e.target.previousElementSibling);
+      const parentDiv = e.target.parentElement.parentElement;
+      const price = parentDiv.querySelector("strong").textContent;
+      parentDiv.querySelector(".product-line-price").textContent =
+        count * price;
+      // console.log(parentDiv.querySelector(".product-line-price").textContent);
+    }
+    calculate();
+  }
+  if (e.target.classList.contains("remove-product")) {
+    if (confirm("Do you want to remove?")) {
+      e.target.parentElement.parentElement.parentElement.remove();
+      calculate;
+    }
+  }
 }
+productsDiv.addEventListener("click", handleClick);
+
+function calculate() {
+  const productTotalPriceElems =
+    document.getElementsByClassName("product-line-price");
+  console.log(productTotalPriceElems);
+  let subTotal = 0;
+  const arr = Array.from(productTotalPriceElems, (item) => item.textContent);
+  subTotal = arr.reduce((acc, item) => acc + +item, 0);
+  console.log(subTotal);
+  const subTotalDiv = document.querySelector("#cart-subtotal").lastElementChild;
+  subTotalDiv.textContent = subTotal.toFixed(2);
+  console.log(subTotalDiv);
+}
+calculate();
