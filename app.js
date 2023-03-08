@@ -1,3 +1,14 @@
+// const plusBtn1 = document.getElementsByClassName("plus")[0];
+// console.log(plusBtn1);
+// function increaseCount() {
+//   console.log("click me");
+//   const countElement = document.getElementById("product-quantity");
+//   console.log(countElement.textContent);
+//   let count = +countElement.textContent + 1;
+//   countElement.textContent = count;
+// }
+// plusBtn1.addEventListener("click", increaseCount);
+
 const productsDiv = document.querySelector(".products");
 function handleClick(e) {
   console.log(e.target);
